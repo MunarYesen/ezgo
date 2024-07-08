@@ -19,3 +19,25 @@ func Any[T any](sources []T, convert func(source T) bool) bool {
 	}
 	return false
 }
+
+// First is a function that returns the first element in the slice that meets the convention
+func First[T any](sources []T, convert func(source T) bool) T {
+	var result T
+	for _, source := range sources {
+		if convert(source) {
+			return source
+		}
+	}
+	return result
+}
+
+// Filter is a function that returns a slice containing all elements that meet the conention
+func Filter[T any](sources []T, convert func(source T) bool) []T {
+	var result = make([]T, 0, len(sources))
+	for _, source := range sources {
+		if convert(source) {
+			result = append(result, source)
+		}
+	}
+	return result
+}

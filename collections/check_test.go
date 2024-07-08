@@ -2,6 +2,7 @@ package collections_test
 
 import (
 	"munaryesen/ezgo/collections"
+	"reflect"
 	"testing"
 )
 
@@ -45,4 +46,43 @@ func TestAny(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestFirst(t *testing.T) {
+	t.Run("TestFirstWithMatchingElement", func(t *testing.T) {
+		sources := []int{1, 2, 3, 4}
+		result := collections.First(sources, func(n int) bool { return n%2 == 0 })
+		if result != 2 {
+			t.Errorf("Expected 2, got %v", result)
+		}
+	})
+
+	t.Run("TestFirstWithNoMatchingElement", func(t *testing.T) {
+		sources := []int{1, 3, 5}
+		result := collections.First(sources, func(n int) bool { return n%2 == 0 })
+		var expected int
+		if result != expected {
+			t.Errorf("Expected %v, got %v", expected, result)
+		}
+	})
+}
+
+func TestFilter(t *testing.T) {
+	t.Run("TestFilterWithMatchingElements", func(t *testing.T) {
+		sources := []int{1, 2, 3, 4}
+		result := collections.Filter(sources, func(n int) bool { return n%2 == 0 })
+		expected := []int{2, 4}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("Expected %v, got %v", expected, result)
+		}
+	})
+
+	t.Run("TestFilterWithNoMatchingElements", func(t *testing.T) {
+		sources := []int{1, 3, 5}
+		result := collections.Filter(sources, func(n int) bool { return n%2 == 0 })
+		expected := []int{}
+		if !reflect.DeepEqual(result, expected) {
+			t.Errorf("Expected %v, got %v", expected, result)
+		}
+	})
 }
