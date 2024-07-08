@@ -1,4 +1,3 @@
 # EZGO
 
-`ezgo` provides util functions that makes my life easier.
-
+`ezgo` provides util functions that make my life easier.
