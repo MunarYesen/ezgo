@@ -12,8 +12,8 @@ func TestNewSet(t *testing.T) {
 	if s == nil {
 		t.Errorf("NewSet() = %v, want non-nil", s)
 	}
-	if len(*s) != 0 {
-		t.Errorf("NewSet() = %d, want 0", len(*s))
+	if s.Length() != 0 {
+		t.Errorf("NewSet() = %d, want 0", s.Length())
 	}
 }
 
@@ -77,5 +77,29 @@ func TestSliceUniqueness(t *testing.T) {
 	result := s.Slice()
 	if len(result) != 1 || result[0] != 1 {
 		t.Errorf("Slice() returned %v, want [1] for uniqueness test", result)
+	}
+}
+
+func TestHasWithExistingElement(t *testing.T) {
+	s := collections.NewSet[int]()
+	s.Add(1)
+	if !s.Has(1) {
+		t.Errorf("Has(1) = false, want true")
+	}
+}
+
+func TestHasWithNonExistingElement(t *testing.T) {
+	s := collections.NewSet[int]()
+	if s.Has(2) {
+		t.Errorf("Has(2) = true, want false")
+	}
+}
+
+func TestHasAfterRemovingElement(t *testing.T) {
+	s := collections.NewSet[int]()
+	s.Add(1)
+	s.Remove(1)
+	if s.Has(1) {
+		t.Errorf("Has(1) after removing = true, want false")
 	}
 }
