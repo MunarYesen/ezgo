@@ -80,7 +80,7 @@ func TestFilter(t *testing.T) {
 	t.Run("TestFilterWithNoMatchingElements", func(t *testing.T) {
 		sources := []int{1, 3, 5}
 		result := collections.Filter(sources, func(n int) bool { return n%2 == 0 })
-		expected := []int{}
+		expected := make([]int, 0)
 		if !reflect.DeepEqual(result, expected) {
 			t.Errorf("Expected %v, got %v", expected, result)
 		}

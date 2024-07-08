@@ -31,7 +31,7 @@ func First[T any](sources []T, convert func(source T) bool) T {
 	return result
 }
 
-// Filter is a function that returns a slice containing all elements that meet the conention
+// Filter is a function that returns a slice containing all elements that meet the convention
 func Filter[T any](sources []T, convert func(source T) bool) []T {
 	var result = make([]T, 0, len(sources))
 	for _, source := range sources {
