@@ -26,3 +26,14 @@ func (s *Set[T]) Remove(element T) bool {
 func (s *Set[T]) Length() int {
 	return len(*s)
 }
+
+func (s *Set[T]) Slice() []T {
+	if s.Length() == 0 {
+		return nil
+	}
+	sl := make([]T, 0, s.Length())
+	for el := range *s {
+		sl = append(sl, el)
+	}
+	return sl
+}

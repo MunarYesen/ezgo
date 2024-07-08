@@ -2,6 +2,8 @@ package collections_test
 
 import (
 	"munaryesen/ezgo/collections"
+	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -48,5 +50,32 @@ func TestLength(t *testing.T) {
 	s.Add(2)
 	if s.Length() != 2 {
 		t.Errorf("Length() after adding = %d, want 2", s.Length())
+	}
+}
+
+func TestSliceNonEmptySet(t *testing.T) {
+	s := collections.NewSet[int]()
+	s.Add(1)
+	s.Add(2)
+	s.Add(3)
+	result := s.Slice()
+	if len(result) != 3 {
+		t.Errorf("Slice() returned slice of length %d, want 3", len(result))
+	}
+
+	expected := []int{1, 2, 3}
+	sort.Ints(result) // Sorting to ensure the order does not affect the test
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Slice() = %v, want %v", result, expected)
+	}
+}
+
+func TestSliceUniqueness(t *testing.T) {
+	s := collections.NewSet[int]()
+	s.Add(1)
+	s.Add(1) // Attempt to add duplicate
+	result := s.Slice()
+	if len(result) != 1 || result[0] != 1 {
+		t.Errorf("Slice() returned %v, want [1] for uniqueness test", result)
 	}
 }
